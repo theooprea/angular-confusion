@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import 'hammerjs';
@@ -17,6 +18,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
+import { LoginComponent } from './login/login.component';
 
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
@@ -32,7 +34,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     FooterComponent,
     AboutComponent,
     HomeComponent,
-    ContactComponent
+    ContactComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -43,11 +46,15 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     MatCardModule,
     MatButtonModule,
     MatListModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule
   ],
   providers: [
     DishService,
     PromotionService
+  ],
+  entryComponents: [
+    LoginComponent
   ],
   bootstrap: [AppComponent]
 })
