@@ -26,7 +26,6 @@
       </mat-card>
     </div>
   </div>
-
   <div fxFlex="40">
     <div *ngIf="dish">
       <mat-list>
@@ -39,5 +38,7 @@
       </mat-list>
     </div>
   </div>
-
+  <div [hidden]="dish">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
 </div>
