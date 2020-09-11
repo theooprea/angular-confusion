@@ -70,7 +70,7 @@ export class ContactComponent implements OnInit {
         // clear previous error message (if any)
         this.formErrors[field] = '';
         const control = form.get(field);
-        if (control && control.dirty && !control.valid) {
+        if (control && (control.dirty || control.touched) && !control.valid) {
           const messages = this.validationMessages[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
@@ -85,16 +85,17 @@ export class ContactComponent implements OnInit {
   onSubmit() {
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
+    this.feedbackFormDirective.resetForm();
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
       telnum: '',
       email: '',
-      agree: false,
+      agree: true,
       contacttype: 'None',
       message: ''
     });
-    this.feedbackFormDirective.resetForm();
+    
   }
 
 }
