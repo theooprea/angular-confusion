@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { Params, ActivatedRoute } from '@angular/router';
@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Comment } from '../shared/comment';
-
+import { baseURL } from '../shared/baseurl';
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
@@ -21,6 +21,7 @@ export class DishdetailComponent implements OnInit {
   next: string;
   dishComment: Comment;
   commentForm: FormGroup;
+  errMess: string;
 
   commentErrors = {
     'author': '',
@@ -40,7 +41,8 @@ export class DishdetailComponent implements OnInit {
   constructor(private dishservice: DishService,
     private route: ActivatedRoute,
     private location: Location,
-    private fb: FormBuilder) { this.createForm(); }
+    private fb: FormBuilder,
+    @Inject('BaseURL') private BaseURL) { this.createForm(); }
 
   createForm() {
     this.commentForm = this.fb.group({
@@ -51,7 +53,8 @@ export class DishdetailComponent implements OnInit {
       updateOn: 'change'
     });
     this.commentForm.valueChanges
-      .subscribe(data => this.onValueChanged(data));
+      .subscribe(data => this.onValueChanged(data),
+      errmess => this.errMess = errmess);
 
     this.onValueChanged();
   }
@@ -77,9 +80,11 @@ export class DishdetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createForm();
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); });
+    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
+      errmess => this.errMess = errmess);
   }
 
   goBack(): void {

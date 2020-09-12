@@ -14,12 +14,12 @@
             <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
           </mat-card-title>
         </mat-card-header>
-        <img mat-card-image src = {{dish.image}} alt = {{dish.name}}>
+        <img mat-card-image src = "{{ BaseURL + dish.image }}" alt = {{dish.name}}>
         <mat-card-content>
           <p>{{dish.description}}</p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
+          <button mat-button [routerLink]="['/dishdetail', prev]"><span class="fa fa-chevron-left fa-lg"></span></button>
           <button mat-button>LIKE</button>
           <button mat-button>SHARE</button>
           <button mat-button (click)="goBack()">BACK</button>
@@ -69,7 +69,11 @@
       </form>
     </div>
   </div>
-  <div [hidden]="dish">
+  <div [hidden]="dish || errMess">
     <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div fxFlex *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
   </div>
 </div>
