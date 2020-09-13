@@ -37,7 +37,7 @@
   </div>
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your Feedback</h3>
-    <div *ngIf="sentfeedback && hideform">
+    <div *ngIf="sentfeedback && hideform" [@visibility]="visibility" [@expand]>
       <h3>Your Submission</h3>
       <p>First Name: {{sentfeedback.firstname}}</p>
       <p>Last Name: {{sentfeedback.lastname}}</p>
@@ -47,7 +47,7 @@
       <p>How?: {{sentfeedback.contacttype}}</p>
       <p>Feedback: {{sentfeedback.message}}</p>
     </div>
-    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()" *ngIf="!hideform">
+    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()" *ngIf="!hideform" [@visibility]="visibility" [@expand]>
       <p>
         <mat-form-field class="half-width">
           <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
